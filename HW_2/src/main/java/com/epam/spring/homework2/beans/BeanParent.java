@@ -31,6 +31,6 @@ public class BeanParent {
 
     @Override
     public String toString() {
-        return "BeanE{" + name + "-" + value + '}';
+        return this.getClass().getSimpleName() +" {" + name + "-" + value + '}';
     }
 }

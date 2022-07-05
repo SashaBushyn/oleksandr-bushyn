@@ -13,5 +13,4 @@ public class BeanF extends BeanParent {
 
     public BeanF() {
     }
-
 }
