@@ -13,5 +13,4 @@ public class OtherBeanB {
         this.beanB = beanB;
         System.out.println(this.getClass().getSimpleName() + ", " + beanB.getClass().getSimpleName() + " was injected through the setter");
     }
-
 }
