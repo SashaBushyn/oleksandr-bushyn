@@ -1,6 +1,5 @@
 package com.epam.spring.homework1.config;
 
-
 import com.epam.spring.homework1.pet.Cheetah;
 import com.epam.spring.homework1.pet.Spider;
 import org.springframework.beans.factory.annotation.Qualifier;

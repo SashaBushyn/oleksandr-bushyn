@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OtherBeanA {
-    private BeanA beanA;
+    private final BeanA beanA;
 
     @Autowired
     public OtherBeanA(BeanA bean) {
         this.beanA = bean;
-        System.out.println(this.getClass().getSimpleName() +", " + bean.getClass().getSimpleName() + " was injected through the constructor");
+        System.out.println(this.getClass().getSimpleName() + ", " + bean.getClass().getSimpleName() + " was injected through the constructor");
     }
 }
