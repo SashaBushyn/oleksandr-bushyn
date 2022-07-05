@@ -10,8 +10,8 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 
         if (bean instanceof BeanParent) {
-            if (((BeanParent) bean).getName() != null && ((BeanParent) bean).getValue() != 0) System.out.println(bean.getClass().getSimpleName() + " is valid");
-
+            if (((BeanParent) bean).getName() != null && ((BeanParent) bean).getValue() != 0)
+                System.out.println(bean.getClass().getSimpleName() + " is valid");
         }
         return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
     }

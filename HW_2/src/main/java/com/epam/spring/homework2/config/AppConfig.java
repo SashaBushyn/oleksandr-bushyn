@@ -1,6 +1,8 @@
 package com.epam.spring.homework2.config;
 
-import com.epam.spring.homework2.beans.*;
+import com.epam.spring.homework2.beans.BeanB;
+import com.epam.spring.homework2.beans.BeanC;
+import com.epam.spring.homework2.beans.BeanD;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
@@ -14,9 +16,8 @@ public class AppConfig {
     @Bean(initMethod = "myInitNetod", destroyMethod = "myDestroyMethod")
     @DependsOn("beanD")
     public BeanB beanB(@Value("${beanB.name}") String name, @Value("${beanB.value}") int value) {
-        return new BeanB(name,value);
+        return new BeanB(name, value);
     }
-
 
     @Bean(initMethod = "myInitNetod", destroyMethod = "myDestroyMethod")
     @DependsOn("beanB")
@@ -24,10 +25,8 @@ public class AppConfig {
         return new BeanC(name, value);
     }
 
-
-    @Bean(initMethod = "myInitNetod", destroyMethod = "myDestroyMethod")
+    @Bean(initMethod = "myInitMethod", destroyMethod = "myDestroyMethod")
     public BeanD beanD(@Value("${beanD.name}") String name, @Value("${beanD.value}") int value) {
         return new BeanD(name, value);
     }
-
 }

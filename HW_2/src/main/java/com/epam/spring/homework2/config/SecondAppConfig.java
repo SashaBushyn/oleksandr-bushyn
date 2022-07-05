@@ -9,12 +9,12 @@ import org.springframework.context.annotation.Configuration;
 public class SecondAppConfig {
 
     @Bean
-    public BeanA beanA(){
-        return  new BeanA();
+    public BeanA beanA() {
+        return new BeanA();
     }
 
     @Bean
-    public BeanE beanE(){
+    public BeanE beanE() {
         return new BeanE();
     }
 }
