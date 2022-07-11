@@ -9,7 +9,7 @@ public class Main {
 
         apx.close();
         for (String name : apx.getBeanDefinitionNames()) {
-            System.out.println(name);
+           System.out.println(apx.getBeanDefinition(name));
         }
     }
 }
