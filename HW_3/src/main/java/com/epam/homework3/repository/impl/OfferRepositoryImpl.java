@@ -33,7 +33,7 @@ public class OfferRepositoryImpl implements OfferRepository {
         if (isDeleted) {
             list.add(offer);
         } else {
-            throw new RuntimeException("User is not found!");
+            throw new RuntimeException("Offer is not found!");
         }
         return offer;
     }
