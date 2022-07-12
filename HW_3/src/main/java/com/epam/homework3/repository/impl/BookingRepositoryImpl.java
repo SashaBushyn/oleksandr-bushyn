@@ -28,7 +28,7 @@ public class BookingRepositoryImpl implements BookingRepository {
         if (isDeleted) {
             bookingList.add(booking);
         } else {
-            throw new RuntimeException("User is not found!");
+            throw new RuntimeException("Booking is not found!");
         }
         return booking;
     }
