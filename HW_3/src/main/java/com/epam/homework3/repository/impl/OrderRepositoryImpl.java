@@ -30,7 +30,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         if (isDeleted) {
             list.add(order);
         } else {
-            throw new RuntimeException("User is not found!");
+            throw new RuntimeException("order is not found!");
         }
         return order;
     }
