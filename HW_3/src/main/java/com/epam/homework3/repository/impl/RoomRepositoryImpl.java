@@ -34,7 +34,7 @@ public class RoomRepositoryImpl implements RoomRepository {
         if (isDeleted) {
             list.add(room);
         } else {
-            throw new RuntimeException("User is not found!");
+            throw new RuntimeException("Room is not found!");
         }
         return room;
     }
