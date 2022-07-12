@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class Room {
-
     private Long id;
     private Integer RoomNumber;
     private RoomClass roomClass;
