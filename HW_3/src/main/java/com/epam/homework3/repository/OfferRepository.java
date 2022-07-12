@@ -5,6 +5,7 @@ import com.epam.homework3.model.entity.Offer;
 import java.util.List;
 
 public interface OfferRepository {
+
     Offer createOffer(Offer offer);
 
     List<Offer> getAllOffers();
