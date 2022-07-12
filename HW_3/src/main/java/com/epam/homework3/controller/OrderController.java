@@ -36,7 +36,6 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/status/{id}")
     OrderDto changeStatus(@PathVariable Long id, @RequestParam("status") OrderHandling status) {
-
         return service.changeStatus(id, status);
     }
 
