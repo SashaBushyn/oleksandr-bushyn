@@ -10,7 +10,6 @@ import org.springframework.context.annotation.*;
 @ComponentScan("com.epam.spring.homework2")
 @PropertySource("application.properties")
 @Import(SecondAppConfig.class)
-
 public class AppConfig {
 
     @Bean(initMethod = "myInitNetod", destroyMethod = "myDestroyMethod")
