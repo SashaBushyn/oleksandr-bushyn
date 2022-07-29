@@ -1,18 +1,16 @@
 package com.epam.homework3.service;
 
 import com.epam.homework3.controller.dto.BookingDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BookingService {
 
     BookingDto createBooking(BookingDto bookingDto);
 
-    List<BookingDto> getAllBookings();
+    Page<BookingDto> getAllBookings(Pageable pageable);
 
-    List<BookingDto> getUserBookings(Long userId);
-
-    BookingDto updateBooking(Long id, BookingDto bookingDto);
+    Page<BookingDto> getUserBookings(Long userId, Pageable pageable);
 
     void deleteBooking(Long id);
 }

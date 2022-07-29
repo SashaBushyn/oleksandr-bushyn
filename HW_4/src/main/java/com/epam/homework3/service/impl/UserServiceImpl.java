@@ -3,68 +3,64 @@ package com.epam.homework3.service.impl;
 import com.epam.homework3.controller.dto.UserDto;
 import com.epam.homework3.mappers.UserMapper;
 import com.epam.homework3.model.entity.User;
-import com.epam.homework3.model.enums.Role;
+import com.epam.homework3.model.exception.EntityException;
 import com.epam.homework3.repository.UserRepository;
 import com.epam.homework3.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public UserDto getUser(String email) {
         log.info("getUser by email {}", email);
-        User user = userRepository.getUser(email);
-        return UserMapper.INSTANCE.userToUserDto(user);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityException("user with email: " + email + " is not found"));
+        return userMapper.userToUserDto(user);
     }
 
     @Override
-    public List<UserDto> listUsers() {
+    public Page<UserDto> listUsers(Pageable pageable) {
         log.info("get all users");
-        return userRepository.getAllUsers()
+        return new PageImpl<>(userRepository.findAll(pageable)
                 .stream()
-                .map(UserMapper.INSTANCE::userToUserDto)
-                .collect(Collectors.toList());
+                .map(userMapper::userToUserDto).collect(Collectors.toList()));
     }
 
     @Override
     public UserDto createUser(UserDto userDto) {
         log.info("createUser with email {}", userDto.getEmail());
-        User user = UserMapper.INSTANCE.UserDtoToUser(userDto);
-        user.setRole(Role.GUEST);
-        user.setId(getNewId());
-        user = userRepository.createUser(user);
-        return UserMapper.INSTANCE.userToUserDto(user);
+        if (!userRepository.existsByEmail(userDto.getEmail())) {
+            User user = userMapper.userDtoToUser(userDto);
+            user = userRepository.save(user);
+            return userMapper.userToUserDto(user);
+        }
+        throw new EntityException("user with email " + userDto.getEmail() + " already exists");
     }
 
     @Override
     public UserDto updateUser(String email, UserDto userDto) {
         log.info("updateUser with email {}", email);
-        User user = UserMapper.INSTANCE.UserDtoToUser(userDto);
-        user = userRepository.updateUser(email, user);
-        return UserMapper.INSTANCE.userToUserDto(user);
+        User persistedUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityException("user with email: " + email + " is not found"));
+        persistedUser = userMapper.updateUser(persistedUser, userDto);
+        User storegedUser = userRepository.save(persistedUser);
+        return userMapper.userToUserDto(storegedUser);
     }
 
     @Override
     public void deleteUser(Long id) {
         log.info("deleteUser with id {}", id);
-        userRepository.deleteUser(id);
-    }
-
-    private Long getNewId() {
-        Long id = userRepository.getAllUsers()
-                .stream()
-                .map(User::getId).max(java.util.Comparator.naturalOrder()).orElse(0L);
-        id++;
-        return id;
+        userRepository.deleteById(id);
     }
 }

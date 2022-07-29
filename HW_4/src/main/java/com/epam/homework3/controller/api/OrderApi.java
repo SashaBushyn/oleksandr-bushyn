@@ -6,11 +6,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Api(tags = "order management API")
 @RequestMapping("/api/v1/")
@@ -24,7 +25,7 @@ public interface OrderApi {
     @ApiOperation("get all orders")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/order")
-    List<OrderDto> getAllOrders();
+    Page<OrderDto> getAllOrders(Pageable pageable);
 
     @ApiImplicitParams({@ApiImplicitParam(name = "id", paramType = "path", required = true, value = "oreder id"),})
     @ApiOperation("change order status")
@@ -36,7 +37,7 @@ public interface OrderApi {
     @ApiOperation("get user orders")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/order/{id}/user")
-    List<OrderDto> getUserOrders(@PathVariable Long id);
+    Page<OrderDto> getUserOrders(@PathVariable Long id, Pageable pageable);
 
     @ApiImplicitParams({@ApiImplicitParam(name = "id", paramType = "path", required = true, value = "oreder id"),})
     @ApiOperation("get order by id")

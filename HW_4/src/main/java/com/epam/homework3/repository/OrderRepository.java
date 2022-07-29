@@ -1,18 +1,12 @@
 package com.epam.homework3.repository;
 
 import com.epam.homework3.model.entity.Order;
+import com.epam.homework3.model.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-public interface OrderRepository {
-
-    Order createOrder(Order order);
-
-    List<Order> getAllOrders();
-
-    Order updateOrder(Long id, Order order);
-
-    Order getOrderById(Long id);
-
-    void deleteOrder(Long id);
+@Repository
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findOrdersByUserId(Long userid);
 }

@@ -2,17 +2,15 @@ package com.epam.homework3.service;
 
 import com.epam.homework3.controller.dto.OfferDto;
 import com.epam.homework3.model.enums.OfferStatus;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface OfferService {
     OfferDto createOffer(OfferDto orderDto);
 
-    List<OfferDto> getAllOffers();
+    Page<OfferDto> getAllOffers(Pageable pageable);
 
-    OfferDto updateOffer(Long id, OfferDto offerDto);
-
-    List<OfferDto> getUserOffers(Long userId);
+    Page<OfferDto> getUserOffers(Long userId, Pageable pageable);
 
     OfferDto getOfferById(Long id);
 

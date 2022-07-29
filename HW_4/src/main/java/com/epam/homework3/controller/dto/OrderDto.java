@@ -3,6 +3,7 @@ package com.epam.homework3.controller.dto;
 import com.epam.homework3.controller.dto.group.OnCreate;
 import com.epam.homework3.controller.dto.group.OnUpdate;
 import com.epam.homework3.controller.validation.DateConstraint;
+import com.epam.homework3.model.entity.User;
 import com.epam.homework3.model.enums.OrderHandling;
 import com.epam.homework3.model.enums.RoomClass;
 import com.fasterxml.jackson.annotation.JsonInclude;

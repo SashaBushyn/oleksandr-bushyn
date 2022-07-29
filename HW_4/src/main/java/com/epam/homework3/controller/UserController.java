@@ -5,10 +5,10 @@ import com.epam.homework3.controller.dto.UserDto;
 import com.epam.homework3.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -23,10 +23,11 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
+    public Page<UserDto> getAllUsers(Pageable page) {
         log.info("request to get all users");
-        return userService.listUsers();
+        return userService.listUsers(page);
     }
+
 
     @Override
     public UserDto createUser(UserDto userDto) {

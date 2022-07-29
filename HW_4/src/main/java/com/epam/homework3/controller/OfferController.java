@@ -6,9 +6,9 @@ import com.epam.homework3.model.enums.OfferStatus;
 import com.epam.homework3.service.OfferService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -23,10 +23,11 @@ public class OfferController implements OfferApi {
     }
 
     @Override
-    public List<OfferDto> getAllOffer() {
+    public Page<OfferDto> getAllOffer(Pageable pageable) {
         log.info("request to get all offers");
-        return service.getAllOffers();
+        return service.getAllOffers(pageable);
     }
+
 
     @Override
     public OfferDto changeOfferStatus(Long id, OfferStatus status) {
@@ -35,9 +36,9 @@ public class OfferController implements OfferApi {
     }
 
     @Override
-    public List<OfferDto> getUserOffers(Long id) {
+    public Page<OfferDto> getUserOffers(Long id, Pageable pageable) {
         log.info("request to get user id {} offers", id);
-        return service.getUserOffers(id);
+        return service.getUserOffers(id, pageable);
     }
 
     @Override

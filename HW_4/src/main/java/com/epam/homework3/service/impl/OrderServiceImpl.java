@@ -3,14 +3,19 @@ package com.epam.homework3.service.impl;
 import com.epam.homework3.controller.dto.OrderDto;
 import com.epam.homework3.mappers.OrderMapper;
 import com.epam.homework3.model.entity.Order;
+import com.epam.homework3.model.entity.User;
 import com.epam.homework3.model.enums.OrderHandling;
+import com.epam.homework3.model.exception.EntityException;
 import com.epam.homework3.repository.OrderRepository;
+import com.epam.homework3.repository.UserRepository;
 import com.epam.homework3.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -18,71 +23,58 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final OrderMapper orderMapper;
 
     @Override
     public OrderDto createOrder(OrderDto orderDto) {
-        log.info("create order by userId {}", orderDto.getUserId());
-        Order order = OrderMapper.INSTANCE.orderDtoToOrder(orderDto);
-        order.setId(getNewId());
-        order = orderRepository.createOrder(order);
-        return OrderMapper.INSTANCE.orderToOrderDto(order);
+        log.info("create order by userId {}", orderDto.getId());
+        Order order = orderMapper.orderDtoToOrder(orderDto);
+        User user = userRepository.findById(orderDto.getUserId())
+                .orElseThrow(() -> new EntityException("user with id: " + orderDto.getUserId() + " is not found"));
+        order.setUser(user);
+        order = orderRepository.save(order);
+        return orderMapper.orderToOrderDto(order);
     }
 
     @Override
-    public List<OrderDto> getAllOrders() {
+    public Page<OrderDto> getAllOrders(Pageable pageable) {
         log.info("get all orders");
-        return orderRepository.getAllOrders()
+        return new PageImpl<>(orderRepository.findAll()
                 .stream()
-                .map(OrderMapper.INSTANCE::orderToOrderDto)
-                .collect(Collectors.toList());
+                .map(orderMapper::orderToOrderDto)
+                .collect(Collectors.toList()));
     }
 
     @Override
-    public OrderDto updateOrder(Long id, OrderDto orderDto) {
-        log.info("update order id = {}", id);
-        Order order = OrderMapper.INSTANCE.orderDtoToOrder(orderDto);
-        orderRepository.updateOrder(id, order);
-        return OrderMapper.INSTANCE.orderToOrderDto(order);
-    }
-
-    @Override
-    public List<OrderDto> getUserOrders(Long userId) {
+    public Page<OrderDto> getUserOrders(Long userId, Pageable pageable) {
         log.info("get userid {}  orders", userId);
-        return orderRepository.getAllOrders()
+        return new PageImpl<>(orderRepository.findOrdersByUserId(userId)
                 .stream()
-                .filter(booking -> booking.getUserId().equals(userId))
-                .map(OrderMapper.INSTANCE::orderToOrderDto)
-                .collect(Collectors.toList());
+                .map(orderMapper::orderToOrderDto).collect(Collectors.toList()));
     }
 
     @Override
     public OrderDto getOrderById(Long id) {
         log.info("get order by id {}", id);
-        Order order = orderRepository.getOrderById(id);
-        return OrderMapper.INSTANCE.orderToOrderDto(order);
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new EntityException("order with id: " + id + " is not found"));
+        return orderMapper.orderToOrderDto(order);
     }
 
     @Override
     public void deleteOrder(Long id) {
         log.info("delete order by id {}", id);
-        orderRepository.deleteOrder(id);
+        orderRepository.deleteById(id);
     }
 
     @Override
     public OrderDto changeStatus(Long id, OrderHandling handling) {
         log.info("change status on {} in order id {}", handling, id);
-        Order order = orderRepository.getOrderById(id);
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new EntityException("order with id: " + id + " is not found"));
         order.setStatus(handling);
-        return OrderMapper.INSTANCE.orderToOrderDto(order);
-    }
-
-    private Long getNewId() {
-        Long id = orderRepository.getAllOrders()
-                .stream()
-                .map(Order::getId)
-                .max(java.util.Comparator.naturalOrder())
-                .orElse(0L);
-        id++;
-        return id;
+        orderRepository.save(order);
+        return orderMapper.orderToOrderDto(order);
     }
 }

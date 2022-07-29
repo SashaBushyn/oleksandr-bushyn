@@ -9,6 +9,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -24,9 +25,6 @@ public class BookingDto {
     @NotBlank(message = "dateOut can`t be empty", groups = OnCreate.class)
     @DateConstraint
     private LocalDate dateOut;
-
-    @Null(message = "dateCreation must be empty on creation", groups = OnCreate.class)
-    private LocalDate dateCreation;
 
     @NotBlank(message = "user id can`t be empty", groups = OnCreate.class)
     private Long userId;

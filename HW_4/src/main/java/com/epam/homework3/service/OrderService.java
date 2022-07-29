@@ -2,18 +2,16 @@ package com.epam.homework3.service;
 
 import com.epam.homework3.controller.dto.OrderDto;
 import com.epam.homework3.model.enums.OrderHandling;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
 
     OrderDto createOrder(OrderDto orderDto);
 
-    List<OrderDto> getAllOrders();
+    Page<OrderDto> getAllOrders(Pageable pageable);
 
-    OrderDto updateOrder(Long id, OrderDto orderDto);
-
-    List<OrderDto> getUserOrders(Long userId);
+    Page<OrderDto> getUserOrders(Long userId, Pageable pageable);
 
     OrderDto getOrderById(Long id);
 

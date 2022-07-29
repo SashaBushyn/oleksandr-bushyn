@@ -13,8 +13,10 @@ public class EntityException extends ServiceException {
         super(DEFAULT_MESSAGE);
     }
 
+
+
     @Override
     public ErrorType getErrorType() {
-        return ErrorType.VALIDATION_ERROR_TYPE;
+        return ErrorType.DATABASE_ERROR_TYPE;
     }
 }

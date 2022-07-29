@@ -1,26 +1,23 @@
 package com.epam.homework3.model.entity;
 
-import com.epam.homework3.model.enums.OfferStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Offer {
+public class ReservedRooms {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private LocalDate dateOfReserve;
     @ManyToOne(cascade = CascadeType.ALL)
-    private User user;
+    private Booking booking;
     @ManyToOne(cascade = CascadeType.ALL)
     private Room room;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Order order;
-    private OfferStatus offerStatus;
 }

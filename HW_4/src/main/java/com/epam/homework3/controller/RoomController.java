@@ -5,8 +5,11 @@ import com.epam.homework3.controller.dto.RoomDto;
 import com.epam.homework3.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -16,9 +19,9 @@ public class RoomController implements RoomApi {
     private final RoomService roomService;
 
     @Override
-    public List<RoomDto> getAllRooms() {
+    public Page<RoomDto> getAllRooms(Pageable pageable) {
         log.info("request to get all rooms");
-        return roomService.GetAllRooms();
+        return roomService.GetAllRooms(pageable);
     }
 
     @Override
@@ -43,5 +46,18 @@ public class RoomController implements RoomApi {
     public void deleteRoom(Long id) {
         log.info("request to delete room by id");
         roomService.deleteRoom(id);
+    }
+
+    @Override
+    public Page<RoomDto> getFreeRooms(LocalDate dateIn, LocalDate dateOut,
+                                      Pageable pageable) {
+        log.info(" request to get free rooms on dates ");
+        return roomService.getFreeRoomsOnDates(dateIn, dateOut,pageable);
+    }
+
+    @Override
+    public List<RoomDto> getFreeRoomsForOrder(Long id) {
+        log.info(" request to get free rooms for order id {}", id);
+        return  roomService.getFreeRoomsForOrder(id);
     }
 }

@@ -2,14 +2,15 @@ package com.epam.homework3.mappers;
 
 import com.epam.homework3.controller.dto.UserDto;
 import com.epam.homework3.model.entity.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.*;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
     UserDto userToUserDto(User user);
 
-    User UserDtoToUser(UserDto userDto);
+    User userDtoToUser(UserDto userDto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    User updateUser(@MappingTarget User user, UserDto userDto);
 }

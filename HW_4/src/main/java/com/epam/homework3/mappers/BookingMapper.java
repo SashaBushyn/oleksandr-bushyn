@@ -4,14 +4,19 @@ import com.epam.homework3.controller.dto.BookingDto;
 import com.epam.homework3.controller.dto.OfferDto;
 import com.epam.homework3.model.entity.Booking;
 import com.epam.homework3.model.entity.Offer;
-import org.mapstruct.Mapper;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface BookingMapper {
-    BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
-
+    @Mappings({@Mapping(target = "userId", source = "booking.user.id"),
+            @Mapping(target = "roomId", source = "booking.room.id")})
     BookingDto bookingToBookingDto(Booking booking);
-
+    @Mappings({@Mapping(target = "user", ignore = true),
+            @Mapping(target = "room", ignore = true)})
     Booking bookingDtoToBooking(BookingDto bookingDto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+    Booking updateOfferMapper(@MappingTarget Booking booking, BookingDto bookingDto);
 }

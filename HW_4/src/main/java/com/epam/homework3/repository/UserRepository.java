@@ -1,19 +1,18 @@
 package com.epam.homework3.repository;
 
 import com.epam.homework3.model.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UserRepository {
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    User createUser(User user);
+    Optional<User> findByEmail(String email);
 
-    User getUser(String email);
-
-    List<User> getAllUsers();
-
-    User updateUser(String email, User user);
-
-    void deleteUser(Long id);
+    Boolean existsByEmail(String email);
 
 }
