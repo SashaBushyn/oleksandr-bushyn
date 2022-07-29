@@ -22,7 +22,10 @@ public class ErrorHandlingController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public List<Error> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
         log.error("handleMethodArgumentNotValidException: message {} ", exception.getMessage(), exception);
-        return exception.getBindingResult().getAllErrors().stream().map(err -> new Error(err.getDefaultMessage(), ErrorType.VALIDATION_ERROR_TYPE, LocalDateTime.now())).collect(Collectors.toList());
+        return exception.getBindingResult().getAllErrors()
+                .stream()
+                .map(err -> new Error(err.getDefaultMessage(), ErrorType.VALIDATION_ERROR_TYPE, LocalDateTime.now()))
+                .collect(Collectors.toList());
     }
 
     @ExceptionHandler(ServiceException.class)

@@ -98,7 +98,7 @@ public class OfferServiceImpl implements OfferService {
                 ReservedRooms reservedRooms = new ReservedRooms();
                 reservedRooms.setRoom(offer.getRoom());
                 reservedRooms.setBooking(booking);
-                reservedRooms.setDateOfReserve(booking.getDateIn().plusDays(i ));
+                reservedRooms.setDateOfReserve(booking.getDateIn().plusDays(i));
                 reservedRoomsRepository.save(reservedRooms);
             }
         }

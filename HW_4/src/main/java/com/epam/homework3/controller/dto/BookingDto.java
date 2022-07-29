@@ -9,7 +9,6 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Null;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder

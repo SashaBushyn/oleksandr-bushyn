@@ -38,7 +38,7 @@ public class RoomController implements RoomApi {
 
     @Override
     public RoomDto updateRoom(Long id, RoomDto roomDto) {
-        log.info("request to update room by id {}");
+        log.info("request to update room by id {}", id);
         return roomService.updateRoom(id, roomDto);
     }
 

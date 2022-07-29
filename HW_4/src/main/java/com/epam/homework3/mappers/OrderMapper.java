@@ -8,6 +8,7 @@ import org.mapstruct.*;
 public interface OrderMapper {
     @Mapping(target = "userId", source = "order.user.id")
     OrderDto orderToOrderDto(Order order);
+
     @Mapping(target = "user", ignore = true)
     Order orderDtoToOrder(OrderDto orderDto);
 

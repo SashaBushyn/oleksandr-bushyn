@@ -2,7 +2,6 @@ package com.epam.homework3.model.entity;
 
 import com.epam.homework3.model.enums.OfferStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
