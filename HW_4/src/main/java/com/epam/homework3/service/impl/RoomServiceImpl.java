@@ -44,7 +44,8 @@ public class RoomServiceImpl implements RoomService {
     public Page<RoomDto> GetAllRooms(Pageable pageable) {
         log.info("get all rooms");
         return new PageImpl<>(roomRepository.findAll(pageable)
-                .stream().map(roomMapper::roomToRoomDto)
+                .stream()
+                .map(roomMapper::roomToRoomDto)
                 .collect(Collectors.toList()));
     }
 
@@ -59,6 +60,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(Long id) {
+        if (!roomRepository.existsById(id)) throw new EntityException("room with id " + id + "is not found");
         log.info("delete room with id {}", id);
         roomRepository.deleteById(id);
     }
@@ -66,11 +68,13 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Page<RoomDto> getFreeRoomsOnDates(LocalDate dateIn, LocalDate dateOut, Pageable pageable) {
         log.info("get free rooms on dates {}, {}", dateIn, dateOut);
-        return roomRepository.getFreeRoomsOnDates(dateIn, dateOut, pageable);
+        return roomRepository.getFreeRoomsOnDates(dateIn, dateOut, pageable).map(room  -> roomMapper.roomToRoomDto(room));
     }
 
     @Override
     public List<RoomDto> getFreeRoomsForOrder(Long id) {
-        return roomRepository.getFreeRoomsForOrder(id);
+        return roomRepository.getFreeRoomsForOrder(id).stream()
+                .map(room -> roomMapper.roomToRoomDto(room))
+                .collect(Collectors.toList());
     }
 }

@@ -57,7 +57,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Page<OfferDto> getUserOffers(Long userId, Pageable pageable) {
+    public Page<OfferDto>getUserOffers(Long userId, Pageable pageable) {
         log.info("get userid {}  orders", userId);
         return new PageImpl<>(offerRepository.findAllByUserId(userId, pageable)
                 .stream()

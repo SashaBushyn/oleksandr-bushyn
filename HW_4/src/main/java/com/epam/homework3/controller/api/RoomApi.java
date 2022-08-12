@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +46,8 @@ public interface RoomApi {
     @ApiOperation("Get free rooms  on date")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/FreeRooms")
-    Page<RoomDto> getFreeRooms(@RequestParam LocalDate dateIn,
-                               @RequestParam LocalDate dateOut,
+    Page<RoomDto> getFreeRooms(@RequestParam("dateIn") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateIn,
+                               @RequestParam("dateOut") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateOut,
                                Pageable pageable);
 
     @ApiOperation("Get free rooms for order")

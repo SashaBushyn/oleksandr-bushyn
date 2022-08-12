@@ -1,6 +1,7 @@
 package com.epam.homework3.model.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,8 +10,9 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReservedRooms {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

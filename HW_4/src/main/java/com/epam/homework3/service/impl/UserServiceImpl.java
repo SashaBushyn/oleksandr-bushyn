@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUser(String email) {
         log.info("getUser by email {}", email);
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new EntityException("user with email: " + email + " is not found"));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityException("user with email: " + email + " is not found"));
         return userMapper.userToUserDto(user);
     }
 
@@ -34,7 +35,8 @@ public class UserServiceImpl implements UserService {
         log.info("get all users");
         return new PageImpl<>(userRepository.findAll(pageable)
                 .stream()
-                .map(userMapper::userToUserDto).collect(Collectors.toList()));
+                .map(userMapper::userToUserDto)
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -54,13 +56,14 @@ public class UserServiceImpl implements UserService {
         User persistedUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityException("user with email: " + email + " is not found"));
         persistedUser = userMapper.updateUser(persistedUser, userDto);
-        User storegedUser = userRepository.save(persistedUser);
-        return userMapper.userToUserDto(storegedUser);
+        persistedUser = userRepository.save(persistedUser);
+        return userMapper.userToUserDto(persistedUser);
     }
 
     @Override
     public void deleteUser(Long id) {
         log.info("deleteUser with id {}", id);
+        if (!userRepository.existsById(id)) throw new EntityException("user with id " + id + " is not found");
         userRepository.deleteById(id);
     }
 }

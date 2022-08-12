@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Page<OrderDto> getAllOrders(Pageable pageable) {
         log.info("get all orders");
-        return new PageImpl<>(orderRepository.findAll()
+        return new PageImpl<>(orderRepository.findAll(pageable)
                 .stream()
                 .map(orderMapper::orderToOrderDto)
                 .collect(Collectors.toList()));
@@ -74,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new EntityException("order with id: " + id + " is not found"));
         order.setStatus(handling);
-        orderRepository.save(order);
+        order = orderRepository.save(order);
         return orderMapper.orderToOrderDto(order);
     }
 }

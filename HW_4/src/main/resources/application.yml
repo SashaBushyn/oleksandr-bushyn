@@ -26,4 +26,3 @@ spring:
         page-parameter: pageNumber
         size-parameter:  pageSize
         one-indexed-parameters: true
-

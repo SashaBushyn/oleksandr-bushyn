@@ -5,7 +5,7 @@ import com.epam.homework3.model.entity.User;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
+public interface    UserMapper {
     UserDto userToUserDto(User user);
 
     User userDtoToUser(UserDto userDto);

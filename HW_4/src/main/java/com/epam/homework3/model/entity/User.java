@@ -1,12 +1,15 @@
 package com.epam.homework3.model.entity;
 
 import com.epam.homework3.model.enums.Role;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
