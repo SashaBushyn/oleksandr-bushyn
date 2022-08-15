@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Arrays;
 
@@ -73,7 +72,7 @@ class UserControllerTest {
 
         when(userService.createUser(userDto)).thenReturn(userDto);
 
-        ResultActions mvcResult = mockMvc.perform(post("/api/v1/user")
+        mockMvc.perform(post("/api/v1/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(userStr))
                 .andDo(print())

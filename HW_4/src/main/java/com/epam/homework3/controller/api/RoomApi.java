@@ -45,14 +45,14 @@ public interface RoomApi {
 
     @ApiOperation("Get free rooms  on date")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/FreeRooms")
+    @GetMapping("/room/FreeRooms")
     Page<RoomDto> getFreeRooms(@RequestParam("dateIn") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateIn,
                                @RequestParam("dateOut") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateOut,
                                Pageable pageable);
 
     @ApiOperation("Get free rooms for order")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/FreeRooms/{id}")
+    @GetMapping("/room/FreeRooms/{id}")
     List<RoomDto> getFreeRoomsForOrder(@PathVariable Long id);
 
 
