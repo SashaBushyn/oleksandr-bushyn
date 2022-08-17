@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public Page<OrderDto> getUserOrders(Long id, Pageable pageable) {
+    public Page<OrderDto> getUserOrders(Pageable pageable, Long id) {
         log.info("request to get users id {} orders", id);
         return service.getUserOrders(id, pageable);
     }

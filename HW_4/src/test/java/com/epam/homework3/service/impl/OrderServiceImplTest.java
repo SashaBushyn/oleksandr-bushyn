@@ -82,7 +82,7 @@ class OrderServiceImplTest {
         Pageable pageable = mock(Pageable.class);
         when(orderRepository.findOrdersByUserId(anyLong())).thenReturn(orderList);
 
-        Page<OrderDto> orderDtos = orderService.getUserOrders(anyLong(), pageable);
+        Page<OrderDto> orderDtos = orderService.getUserOrders(anyLong(),pageable);
 
         assertEquals(orderDtos.getTotalElements(), orderList.size());
     }

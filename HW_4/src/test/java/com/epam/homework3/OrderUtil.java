@@ -23,6 +23,7 @@ public class OrderUtil {
 
     public static OrderDto orderDtoTest(int i) {
         return OrderDto.builder()
+                .id((long)i)
                 .dateIn(LocalDate.now())
                 .dateOut(LocalDate.now().plusDays(i))
                 .personsNumber(i)
