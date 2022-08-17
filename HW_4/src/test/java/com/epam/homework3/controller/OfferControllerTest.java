@@ -92,7 +92,7 @@ class OfferControllerTest {
     }
 
     @Test
-    void getOfferById() throws Exception{
+    void getOfferByIdTest() throws Exception{
         OfferDto offerDto = OfferUtil.testOfferDto(1);
         when(offerService.getOfferById(anyLong())).thenReturn(offerDto);
         String offerJson = jsonFromObject(offerDto);
@@ -104,7 +104,7 @@ class OfferControllerTest {
     }
 
     @Test
-    void deleteOffer() throws Exception{
+    void deleteOfferTest() throws Exception{
         doNothing().when(offerService).deleteOffer(anyLong());
 
         mockMvc.perform(delete("/api/v1/offer/" + anyLong())
